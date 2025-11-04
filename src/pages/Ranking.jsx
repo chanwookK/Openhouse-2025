@@ -30,7 +30,7 @@ function Ranking() {
   // ✅ WebSocket 연결
   // ======================
   useEffect(() => {
-    const socket = new SockJS("http://localhost:8080/ws/leaderboard")
+    const socket = new SockJS(import.meta.env.VITE_WS_URL)
     const client = Stomp.over(socket)
     client.debug = null
 
@@ -42,7 +42,6 @@ function Ranking() {
         try {
           const payload = JSON.parse(msg.body)
           hasRealtimeRef.current = true
-          console.log("🏆 실시간 업데이트 수신:", payload)
 
           // ✅ META 데이터 수신
           if (payload.type === "META" && payload.competitionMetaRes) {
@@ -57,7 +56,7 @@ function Ranking() {
             if (metaRes.visibility !== undefined) {
               setVisibility(metaRes.visibility)
             }
-            console.log("🧭 메타데이터 갱신됨:", metaRes)
+           
             return
           }
 
