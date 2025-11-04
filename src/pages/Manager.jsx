@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { adminService } from '../services/adminService'
 import { leaderboardService } from '../services/leaderboardService'
 import './Manager.css'
+const API_BASE = import.meta.env.VITE_API_URL
 
 function Manager() {
   const [settings, setSettings] = useState({
@@ -136,7 +137,7 @@ function Manager() {
 
     try {
       setBonusLoading(true)
-      const response = await fetch('http://localhost:8080/api/v1/judge/score/bonus', {
+      const response = await fetch('${API_BASE}/judge/score/bonus', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

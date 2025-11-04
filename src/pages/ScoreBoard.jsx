@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import './ScoreBoard.css'
+const API_BASE = import.meta.env.VITE_API_URL
 
 function ScoreBoard() {
   const [searchParams] = useSearchParams()
@@ -26,7 +27,7 @@ function ScoreBoard() {
       if (!clubName || clubName === 'Guest') return
       try {
         const res = await fetch(
-          `http://localhost:8080/api/v1/judge/score/scoreboard?defenseClubName=${encodeURIComponent(
+          `${API_BASE}/judge/score/scoreboard?defenseClubName=${encodeURIComponent(
             clubName
           )}`
         )
@@ -61,7 +62,7 @@ function ScoreBoard() {
   // 🔹 점수 조정 API 호출 함수
   const adjustScore = async (attackClubId, delta, confirm = false) => {
     try {
-      const res = await fetch('http://localhost:8080/api/v1/judge/score/adjust', {
+      const res = await fetch('${API_BASE}/judge/score/adjust', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
