@@ -296,24 +296,37 @@
   }
 }
 /* =======================
-   Logo Section
+   Logo Section (Responsive)
 ========================== */
 .logo-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 70px;      /* 상단 여백 */
-  margin-bottom: 40px;   /* 점수판과의 간격 */
+  margin-top: 70px;
+  margin-bottom: 40px; /* 점수판과 간격 */
 }
 
 .logo-icon img {
-  width: 60px;          /* 로고 크기 (원하는 대로 조정 가능) */
-  height: auto;          /* 비율 유지 */
-  object-fit: contain;   /* 이미지 비율 깨짐 방지 */
+  width: 100%;
+  max-width: 60px;       /* 데스크탑 최대 크기 */
+  height: auto;           /* 비율 유지 */
+  object-fit: contain;    /* 찌그러짐 방지 */
   transition: transform 0.2s ease;
 }
 
 .logo-icon img:hover {
-  transform: scale(1.05); /* 살짝 확대 효과 (선택사항) */
+  transform: scale(1.05);
 }
+
+/* ✅ 모바일 화면 대응 */
+@media (max-width: 600px) {
+  .logo-icon {
+    margin-bottom: 24px;  /* 모바일에선 간격 살짝 줄임 */
+  }
+
+  .logo-icon img {
+    max-width: 80px;      /* 모바일에선 자동 축소 */
+  }
+}
+
 
