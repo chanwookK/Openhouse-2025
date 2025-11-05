@@ -328,22 +328,14 @@ function Ranking() {
   return (
     <div className="ranking-page">
       <div className="ranking-hero">
-        <div className="trophy-icon">
-          <svg
-            viewBox="0 0 100 100"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M50 20L40 40H60L50 20Z"
-              fill={visibility ? "#FFD700" : "#9E9E9E"}
-            />
-            <path
-              d="M30 40H70L65 80H35L30 40Z"
-              fill={visibility ? "#FFD700" : "#9E9E9E"}
-            />
-          </svg>
-        </div>
+      <div className="trophy-icon">
+      <img
+        src="/logo.svg"
+        alt="왕관 아이콘"
+        className="trophy-image"
+      />
+      </div>
+
         <h1>{meta.title}</h1>
         <p>{meta.announcement}</p>
 
@@ -474,9 +466,19 @@ function Ranking() {
               </div>
             )}
           </div>
+          <div className="logo-icon">
+            <div>
+            <img
+             src="/logo.png"
+              alt="왕관 아이콘"
+              className="trophy-image"
+             />
+            </div>
+      </div>
         </>
       )}
     </div>
+    
   )
 }
 
