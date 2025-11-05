@@ -1,0 +1,69 @@
+### 🏁 UC-C1: 리더보드 메타데이터 조회
+GET http://localhost:8080/api/v1/public/competition/meta
+Accept: application/json
+
+###
+# {
+#  "title": "2025 오픈하우스 점수전",
+#  "announcement": "점수판은 실시간으로 갱신됩니다.",
+#  "totalTime": 45,
+#  "startTime": "2025-10-25T16:30:38.363327",
+#  "visibility": true,
+#  "lockTime": 15
+# }
+
+### 🏆 UC-C2: 동아리별 리더보드 조회
+GET http://localhost:8080/api/v1/public/leaderboard/clubs
+Accept: application/json
+
+###
+# [
+#  {
+#    "name": "로타랙트",
+#    "score": 0
+#  },
+#  {
+#    "name": "목방",
+#    "score": 0
+#  },
+#  {
+#    "name": "동굴탐사회",
+#    "score": 0
+#  }
+#]
+
+
+### 🧑‍🤝‍🧑 UC-C3: 팀별 리더보드 조회
+GET http://localhost:8080/api/v1/public/leaderboard/teams
+Accept: application/json
+
+###
+# [
+#  {
+#    "name": "마리오 팀",
+#    "score": 0
+#  },
+#  {
+#    "name": "루이지 팀",
+#    "score": 0
+#  },
+#  {
+#    "name": "와리오 팀",
+#    "score": 0
+#  },
+#  {
+#    "name": "와루이지 팀",
+#    "score": 0
+#  }
+#]
+
+### 📜 UC-C4: 전체 점수 이력 조회
+GET http://localhost:8080/api/v1/public/history
+Accept: application/json
+
+###
+# [
+#  {
+#    "reason": "수중탐사부가 눈꽃 공격에 성공했습니다."
+#  }
+#]

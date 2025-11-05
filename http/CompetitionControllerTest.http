@@ -1,0 +1,30 @@
+### 🔍 1. 대회 메타데이터 수정 (UC-A1~A3~A5)
+PATCH http://localhost:8080/api/v1/admin/competition
+Content-Type: application/json
+
+{
+  "title": "2025 오픈하우스 점수전",
+  "announcement": "점수판은 실시간으로 갱신됩니다.",
+  "totalTime": 45,
+  "visibility": true
+}
+
+###
+
+### 🏁 2. 대회 시작 (UC-A4)
+POST http://localhost:8080/api/v1/admin/competition/start
+Content-Type: application/json
+
+{
+  "confirm": false
+}
+
+###
+
+### ⚠️ 3. 대회 강제 재시작 (이미 진행 중일 때)
+POST http://localhost:8080/api/v1/admin/competition/start
+Content-Type: application/json
+
+{
+  "confirm": true
+}
