@@ -62,7 +62,7 @@ function ScoreBoard() {
   // 🔹 점수 조정 API 호출 함수
   const adjustScore = async (attackClubId, delta, confirm = false) => {
     try {
-      const res = await fetch('${API_BASE}/judge/score/adjust', {
+      const res = await fetch(`${API_BASE}/judge/score/adjust`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -30,7 +30,7 @@ function Ranking() {
   // ✅ WebSocket 연결
   // ======================
   useEffect(() => {
-    const socket = new SockJS(import.meta.env.VITE_WS_URL)
+    const socket = new SockJS(`${import.meta.env.VITE_WS_URL}`)
     const client = Stomp.over(socket)
     client.debug = null
 
@@ -134,36 +134,33 @@ function Ranking() {
   // ======================
   useEffect(() => {
     if (!meta.startTime) return
-    const start = new Date(meta.startTime)
-
+  
+    const start = new Date(meta.startTime.endsWith('Z') ? meta.startTime : meta.startTime + 'Z')
     const timer = setInterval(() => {
       const now = new Date()
       const diffMs = now - start
       const totalSeconds = Math.floor(diffMs / 1000)
       const minutes = Math.floor(totalSeconds / 60)
       const seconds = totalSeconds % 60
-
-      const remaining = meta.totalTime
+  
+      const remaining = meta.totalTime > 0
         ? Math.max(0, meta.totalTime * 60 - totalSeconds)
         : null
       const remainingMin = remaining ? Math.floor(remaining / 60) : 0
       const remainingSec = remaining ? remaining % 60 : 0
-
+  
       setMeta((prev) => ({
         ...prev,
-        elapsedTime: `${String(minutes).padStart(2, "0")}:${String(
-          seconds
-        ).padStart(2, "0")}`,
+        elapsedTime: `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`,
         remainingTime: remaining
-          ? `${String(remainingMin).padStart(2, "0")}:${String(
-              remainingSec
-            ).padStart(2, "0")}`
+          ? `${String(remainingMin).padStart(2, "0")}:${String(remainingSec).padStart(2, "0")}`
           : null,
       }))
     }, 1000)
-
+  
     return () => clearInterval(timer)
-  }, [meta.startTime, meta.totalTime])
+  }, [meta.startTime]) // totalTime은 내부 참조
+  
 
   // ======================
   // ✅ 초기 데이터 로드

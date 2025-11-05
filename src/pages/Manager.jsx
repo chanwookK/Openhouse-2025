@@ -137,7 +137,7 @@ function Manager() {
 
     try {
       setBonusLoading(true)
-      const response = await fetch('${API_BASE}/judge/score/bonus', {
+      const response = await fetch(`${API_BASE}/judge/score/bonus`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
