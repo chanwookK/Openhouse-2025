@@ -37,17 +37,27 @@ function ScoreBoard() {
         setDefenseClubVisit(data.defenseClubVisit)
         setDefenseClubScore(data.defenseClubScore)
         setClubs(
-          data.scoreboardClubRes.map(c => ({
-            id: c.id,
-            name: c.name,
-            score: c.score,
-            visit: c.visit,
-            lockTime: new Date(c.lockedUntil),
-            lockTimeString: new Date(c.lockedUntil).toLocaleTimeString('ko-KR', {
-              hour: '2-digit',
-              minute: '2-digit',
-            }),
-          }))
+          data.scoreboardClubRes.map(c => {
+            // 1️⃣ 서버 응답값에 Z(UTC 표시)가 없으면 강제로 붙여줌
+            const utcString = c.lockedUntil?.endsWith('Z')
+              ? c.lockedUntil
+              : c.lockedUntil + 'Z'
+        
+            // 2️⃣ 한국 시간 기준으로 변환
+            const lockTime = new Date(utcString)
+        
+            return {
+              id: c.id,
+              name: c.name,
+              score: c.score,
+              visit: c.visit,
+              lockTime, // Date 객체로 보관 (비교용)
+              lockTimeString: lockTime.toLocaleTimeString('ko-KR', {
+                hour: '2-digit',
+                minute: '2-digit',
+              }),
+            }
+          })
         )
       } catch (err) {
         setError(err.message)

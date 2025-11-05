@@ -97,24 +97,34 @@ function Ranking() {
             const sorted = [...payload.scoreHistoryRes].sort(
               (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
             )
-          
             setLogData(
-              sorted.map((item) => ({
-                time: new Date(item.timestamp).toLocaleTimeString("ko-KR", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                }),
-                name: item.reason?.split("가(이)")[0] || "알 수 없음",
-                action: item.reason || "기록 없음",
-                points:
-                  item.delta > 0
-                    ? `+${item.delta}`
-                    : item.delta < 0
-                    ? `${item.delta}`
-                    : "+0",
-              }))
+              sorted.map((item) => {
+                const utcString = /Z|[+-]\d\d:?\d\d$/.test(item.timestamp)
+                  ? item.timestamp
+                  : item.timestamp + "Z"
+            
+                const localTime = new Date(utcString)
+            
+                return {
+                  time: new Intl.DateTimeFormat("ko-KR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false,
+                    timeZone: "Asia/Seoul", // ✅ 시간 보정 핵심
+                  }).format(localTime),
+                  name: item.reason?.split("가(이)")[0] || "알 수 없음",
+                  action: item.reason || "기록 없음",
+                  points:
+                    item.delta > 0
+                      ? `+${item.delta}`
+                      : item.delta < 0
+                      ? `${item.delta}`
+                      : "+0",
+                }
+              })
             )
+            
           }
         } catch (err) {
           console.error("❌ WebSocket 메시지 파싱 실패:", err)
@@ -219,22 +229,52 @@ function Ranking() {
           )
         
           setLogData(
-            sorted.map((item) => ({
-              time: new Date(item.timestamp).toLocaleTimeString("ko-KR", {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-              }),
-              name: item.reason?.split("가(이)")[0] || "알 수 없음",
-              action: item.reason || "기록 없음",
-              points:
-                item.delta > 0
-                  ? `+${item.delta}`
-                  : item.delta < 0
-                  ? `${item.delta}`
-                  : "+0",
-            }))
+            sorted.map((item) => {
+              if (!item.timestamp) {
+                // timestamp가 없는 경우 안전 처리
+                return {
+                  time: "-",
+                  name: item.reason?.split("가(이)")[0] || "알 수 없음",
+                  action: item.reason || "기록 없음",
+                  points:
+                    item.delta > 0
+                      ? `+${item.delta}`
+                      : item.delta < 0
+                      ? `${item.delta}`
+                      : "+0",
+                }
+              }
+          
+              // ✅ UTC → KST 변환 (Netlify 등 UTC 환경 대응)
+              const utcString = /Z|[+-]\d\d:?\d\d$/.test(item.timestamp)
+                ? item.timestamp
+                : item.timestamp + "Z"
+          
+              const localTime = new Date(utcString)
+              const isValid = !isNaN(localTime.getTime())
+          
+              return {
+                time: isValid
+                  ? new Intl.DateTimeFormat("ko-KR", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                      hour12: false,
+                      timeZone: "Asia/Seoul", // ✅ 한국 시간 고정
+                    }).format(localTime)
+                  : "-",
+                name: item.reason?.split("가(이)")[0] || "알 수 없음",
+                action: item.reason || "기록 없음",
+                points:
+                  item.delta > 0
+                    ? `+${item.delta}`
+                    : item.delta < 0
+                    ? `${item.delta}`
+                    : "+0",
+              }
+            })
           )
+          
         }        
       }
 

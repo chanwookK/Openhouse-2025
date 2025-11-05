@@ -8,7 +8,7 @@
 .ranking-page {
   width: 100%;
   max-width: 900px;
-  background: #ffffff; /* 메인 카드 */
+  background: #ffffff;
   min-height: 100vh;
   padding: 40px 20px;
   border-radius: 16px;
@@ -48,7 +48,6 @@
   line-height: 1.6;
 }
 
-/* 남은 시간 텍스트 */
 .ranking-hero p.time {
   color: #007bff;
   font-weight: 600;
@@ -159,6 +158,44 @@
 }
 
 /* =======================
+   🎨 Team Color Theme
+========================== */
+/* 각 팀 이름에 따른 색상 강조 */
+.ranking-row .table-cell:nth-child(2) {
+  font-weight: 600;
+}
+
+.ranking-row .table-cell:nth-child(2):has(span:contains("마리오")) {
+  color: #e74c3c; /* 빨강 */
+}
+
+.ranking-row .table-cell:nth-child(2):has(span:contains("루이지")) {
+  color: #2ecc71; /* 초록 */
+}
+
+.ranking-row .table-cell:nth-child(2):has(span:contains("와리오")) {
+  color: #f1c40f; /* 노랑 */
+}
+
+.ranking-row .table-cell:nth-child(2):has(span:contains("와루이지")) {
+  color: #9b59b6; /* 보라 */
+}
+
+/* Safari 등 :has() 미지원 시 fallback */
+.ranking-row.team-mario .table-cell:nth-child(2) {
+  color: #e74c3c;
+}
+.ranking-row.team-luigi .table-cell:nth-child(2) {
+  color: #2ecc71;
+}
+.ranking-row.team-wario .table-cell:nth-child(2) {
+  color: #f1c40f;
+}
+.ranking-row.team-waluigi .table-cell:nth-child(2) {
+  color: #9b59b6;
+}
+
+/* =======================
    Medal
 ========================== */
 .table-cell {
@@ -228,12 +265,12 @@
 
 /* 점수 색상 */
 .points-positive {
-  color: #22c55e; /* 초록 */
+  color: #22c55e;
   font-weight: 600;
 }
 
 .points-negative {
-  color: #dc2626; /* 빨강 */
+  color: #dc2626;
   font-weight: 600;
 }
 
